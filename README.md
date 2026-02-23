@@ -2,7 +2,7 @@
 
 A [pi](https://github.com/badlogic/pi) extension that spins a slot machine overlay every time you send a prompt. If all 3 reels match, you hit the **JACKPOT** with a flashy explosion! 💥
 
-<video src="https://cdn.jsdelivr.net/npm/pi-slot-machine@latest/demo.mp4" autoplay loop muted playsinline></video>
+![Slot machine jackpot screenshot](screenshot.png)
 
 ## Install
 
