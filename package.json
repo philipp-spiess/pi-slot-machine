@@ -11,7 +11,8 @@
   "pi": {
     "extensions": [
       "./index.ts"
-    ]
+    ],
+    "video": "https://cdn.jsdelivr.net/npm/pi-slot-machine@latest/demo.mp4"
   },
   "dependencies": {
     "@mariozechner/pi-coding-agent": "*",

@@ -21,7 +21,7 @@ const SPARKLES = ["✨", "🌟", "💫", "⚡", "💥", "🎉", "🎊", "🎆", 
 const TICK_MS = 40;
 const REEL_STOPS = [20, 36, 54];
 const CLOSE_LOSE = 72;
-const CLOSE_WIN = 120;
+const CLOSE_WIN = 140;
 const WIN_CHANCE = 0.18;
 
 const ri = (n: number) => Math.floor(Math.random() * n);
@@ -210,9 +210,9 @@ class SlotMachineComponent {
 				lines.push(ctr(winStyled, winVW));
 			}
 
-			const maxSparkleRows = Math.min(Math.floor(et / 4), 5);
+			const maxSparkleRows = Math.min(Math.floor(et / 7), 5);
 			for (let sr = 0; sr < maxSparkleRows; sr++) {
-				const count = Math.min(2 + sr + Math.floor(et / 8), 12);
+				const count = Math.min(2 + sr + Math.floor(et / 12), 12);
 				let sparkRow = "";
 				for (let i = 0; i < count; i++) {
 					const idx = (this.tick * 3 + i * 7 + sr * 13) % SPARKLES.length;
@@ -226,17 +226,11 @@ class SlotMachineComponent {
 				}
 			}
 
-			if (et > 20 && et < 55) {
+			if (et > 25) {
 				lines.push(empty());
-				const banners = [
-					bgYellow(bold("  💰 YOU HIT THE JACKPOT! 💰  ")),
-					bgRed(bold("  💥 YOU HIT THE JACKPOT! 💥  ")),
-					bgMagenta(bold("  🔥 YOU HIT THE JACKPOT! 🔥  ")),
-				];
 				const bannerRaw = "  💰 YOU HIT THE JACKPOT! 💰  ";
 				const bannerVW = visibleWidth(bannerRaw);
-				const banner = banners[Math.floor(this.tick / 3) % banners.length];
-				lines.push(ctr(banner, bannerVW));
+				lines.push(ctr(bgYellow(bold(bannerRaw)), bannerVW));
 			}
 		} else if (allStopped) {
 			const a = this.finalPos[0],
@@ -296,7 +290,8 @@ export default function (pi: ExtensionAPI) {
 		if (!rigged) rigged = !!pi.getFlag("rigged");
 		if (!ctx.hasUI) return;
 
-		await ctx.ui.custom<void>(
+		// Don't await — let the agent proceed while the slot machine plays
+		ctx.ui.custom<void>(
 			(tui, _theme, _kb, done) => {
 				return new SlotMachineComponent(tui, () => done(undefined), rigged);
 			},
